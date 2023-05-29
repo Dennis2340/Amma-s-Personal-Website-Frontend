@@ -4,7 +4,36 @@ import { Box } from '@mui/material';
 import DenseAppBar from '../Components/BasicBar';
 import {TextField} from '@mui/material';
 import {Typography, Button} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+
 const Login = props => {
+
+    const navigate = useNavigate()
+
+    const formik = useFormik({
+        initialValues: {
+            userEmail: "",
+            userPassword: "",
+            
+        },
+        onSubmit: values => {
+            if(values){
+                try{
+                  
+                  
+                 console.log(values)
+                  
+                }catch(error){
+                    console.log(error.message)
+                }
+            
+                
+            }
+        }
+    })
+
+
     return (
     <div>
      <Box>
@@ -13,7 +42,7 @@ const Login = props => {
 
      <Box
          sx={{
-            marginTop: 5,  
+            marginTop: 13,  
             textAlign: "center"
             }}
             >
@@ -31,37 +60,36 @@ const Login = props => {
             width: {xs: "75%", sm: "50%"}
             
         }}
-        >
-            
+        >  
             <div
              style={{
                 marginTop: 40,
-                height: 50,
-                
-                
+                height: 50,  
             }}
             >
              <TextField 
              id="outlined-basic" 
              label="Email" 
              variant="outlined" 
+             name='userEmail'
              fullWidth
+             value={formik.values.userEmail}
              />
             </div>
             <div
              style={{
                 marginTop: 40,
-                height: 50,
-                
-                
+                height: 50,  
             }}
             >
              <TextField 
              id="outlined-basic" 
              label="Password"
              type="password"
+             name='userPassword'
              autoComplete="current-password"
              fullWidth
+             value={formik.values.userPassword}
              />
             </div>
             <div

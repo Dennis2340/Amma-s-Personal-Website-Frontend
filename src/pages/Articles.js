@@ -6,7 +6,7 @@ import ResponsiveDrawer from "../Components/ArticleAppBar"
 import { Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux"
 import { fetchArticles, getAllArticles, getArticleError, getArticleStatus } from '../appfeatures/articles/articleSlice';
-
+import LinearIndeterminate from '../Components/LoadingPage';
 const Articles = props => {
 
 
@@ -28,16 +28,14 @@ const Articles = props => {
    let content;
    if(articleStatus === "loading"){
     return (
-      <Box>
-        <Typography variant='h3' component="h4">Loading...</Typography>
+      <Box sx={{ marginTop: 25,}}>
+        <LinearIndeterminate/>
       </Box>
     )
    }
    else if(articleStatus === "succeeded"){
     const orderedArticle = articleList.slice().sort((a,b) => {
-     if(a.date && b.date) return  b.date.localeCompare(a.date)
-     
-     return 0
+      return new Date(b.createdAt) - new Date(a.createdAt);
    })
    console.log(orderedArticle)
   

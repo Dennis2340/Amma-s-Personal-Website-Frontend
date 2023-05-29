@@ -25,6 +25,7 @@ import { SinglePoem }  from "./appfeatures/poems/SinglePoem"
 import { AddStory }  from "./appfeatures/stories/AddStory"
 import { EditStory }  from "./appfeatures/stories/EditStory"
 import { SingleStory }  from "./appfeatures/stories/SingleStory"
+import { AddVideo } from "./appfeatures/videos/AddVideo"
 
 const App = () => {
   
@@ -56,14 +57,16 @@ const App = () => {
          <Route path="editmotmsg/:id" element={<EditMotMsg/>}/>
          <Route path="singlemotmsg/:id" element={<SingleMotMsg/>}/>
 
-         {/* These are the are the article routes */}
+         {/* These are the are the video routes */}
          <Route path="video" element={<Video/>}/>
+         <Route path="addvideo" element={<AddVideo/>} />
 
          {/* These are the are the article routes */}
         <Route path="about" element={<About/>}/>
 
         {/* This the registration routes */}
         <Route path="register" element ={<Registration/>}/>
+        <Route path="login" element = {<Login/>}/>
     </Routes>
   )
   

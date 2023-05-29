@@ -6,7 +6,7 @@ import ResponsiveDrawer from "../Components/VideoAppBar"
 import { Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux"
 import { fetchVideos, getVideoError, getVideoStatus,getAllVideos } from '../appfeatures/videos/videoSlice';
-
+import LinearIndeterminate from '../Components/LoadingPage';
 const Video = props => {
 
 
@@ -28,16 +28,14 @@ const Video = props => {
    let content;
    if(videoStatus === "loading"){
     return (
-      <Box>
-        <Typography variant='h3' component="h4">Loading...</Typography>
+      <Box sx={{ marginTop: 25,}}>
+        <LinearIndeterminate/>
       </Box>
     )
    }
    else if(videoStatus === "succeeded"){
    const orderedVideo = videoList.slice().sort((a,b) => {
-    if(a.date && b.date) return  b.date.localeCompare(a.date)
-    
-    return 0
+    return new Date(b.createdAt) - new Date(a.createdAt);
   })
 
   content = orderedVideo.map((video, index) => <VideoComp key={`${video._id}-${index}`} video = {video}/>)

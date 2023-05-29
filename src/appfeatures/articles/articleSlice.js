@@ -71,7 +71,9 @@ const articleSlice = createSlice({
               // Add any additional processing or modifications to the story object if needed
               return article;
             });
-            state.articles = state.articles.concat(loadedArticle);
+            if(state.articles.length === 0){
+              state.articles = loadedArticle
+            }
         })
           
            

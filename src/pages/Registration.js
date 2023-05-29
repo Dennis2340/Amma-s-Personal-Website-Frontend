@@ -15,7 +15,7 @@ const Registration = (props) => {
         </Box>
 
         <Box
-        sx={{textAlign: "center", marginTop: 5}}
+        sx={{textAlign: "center", marginTop: 12}}
         >
             <Typography variant='h4' component="h3">
                 Registration

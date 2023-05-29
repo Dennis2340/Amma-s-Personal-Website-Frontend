@@ -6,7 +6,7 @@ import ResponsiveDrawer from "../Components/MotMsgAppBar"
 import { Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux"
 import { fetchMotMsg, getMotMsgError, getMotMsgStatus,getAllMotMsg } from '../appfeatures/motivationalmsg/motmsgSlice';
-
+import LinearIndeterminate from '../Components/LoadingPage';
 const MotivationalMsg = props => {
 
   const dispatch = useDispatch()
@@ -26,18 +26,16 @@ const MotivationalMsg = props => {
    let content;
    if(motmsgStatus === "loading"){
     return (
-      <Box>
-        <Typography variant='h3' component="h4">Loading...</Typography>
+      <Box sx={{ marginTop: 25,}}>
+        <LinearIndeterminate/>
       </Box>
     )
    }
 
    else if(motmsgStatus === "succeeded"){
-    const orderedMotMsg = motmsgList.slice().sort((a,b) => {
-     if(a.date && b.date) return  b.date.localeCompare(a.date)
-     
-     return 0
-   })
+    const orderedMotMsg = motmsgList.slice().sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
    content = orderedMotMsg.map((motmsg, index) => <BasicCard key={`${motmsg._id}-${index}`} motmsg = {motmsg}/>)
   }

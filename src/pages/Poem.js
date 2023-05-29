@@ -6,6 +6,7 @@ import ResponsiveDrawer from "../Components/PoemAppBar"
 import { Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux"
 import { fetchPoems, getPoemError, getPoemStatus,getAllPoems } from '../appfeatures/poems/poemSlice';
+import LinearIndeterminate from '../Components/LoadingPage';
 
 const Poem = props => {
 
@@ -18,25 +19,29 @@ const Poem = props => {
 
    useEffect(() => {
     if(poemStatus === "idle"){
+      console.log("Fetching poems...");
       dispatch(fetchPoems())
       
+    }else if (poemStatus === "succeeded") {
+      console.log("Poems fetched successfully!");
+      console.log("Poem list:", poemList);
     }
-   }, [poemStatus, dispatch])
+   }, [poemStatus,dispatch,poemList])
 
    let content;
    if(poemStatus === "loading"){
     return (
-      <Box>
-        <Typography variant='h3' component="h4">Loading...</Typography>
+      <Box sx={{ marginTop: 25,}}>
+        <LinearIndeterminate/>
       </Box>
+      
     )
    }
    else if(poemStatus === "succeeded"){
-   const orderedPoem = poemList.slice().sort((a,b) => {
-    if(a.date && b.date) return  b.date.localeCompare(a.date)
+    const orderedPoem = poemList.slice().sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
     
-    return 0
-  })
    content = orderedPoem.map((poem, index) => <BasicCard key={`${poem._id}-${index}`} poem = {poem}/>)
    }
    else if (poemStatus === "failed"){

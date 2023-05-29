@@ -7,8 +7,10 @@ import { addNewPoem } from './poemSlice';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const AddPoem = props => {
+
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const [addRequestStatus, setAddRequestStatus] = useState("idle")
@@ -24,7 +26,12 @@ const AddPoem = props => {
             if(values){
             try{
               setAddRequestStatus("pending")
-              dispatch(addNewPoem(values))  
+              dispatch(addNewPoem(values)) 
+              values.poemAuthor = ""
+              values.poemDetails = ""
+              values.poemTitle = ""
+              values.poemGenre = ""
+              navigate("/poems") 
               
             }catch(error){
                 console.log(error.message)
@@ -37,9 +44,12 @@ const AddPoem = props => {
     
     return (
     <div>
+        <Box sx={{ marginBottom: 10}}>
         <DenseAppBar/>
-         <Box sx={{textAlign: "center", marginTop: 5}}>
-            <Typography variant="h4" component="h3">
+        </Box>
+        
+         <Box sx={{textAlign: "center", marginTop: 12}}>
+            <Typography style={{marginTop: 12}} variant="h4" component="h3">
                 Add New Poem
             </Typography>
         </Box>

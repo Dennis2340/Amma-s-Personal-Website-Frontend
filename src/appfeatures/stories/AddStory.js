@@ -8,8 +8,11 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
 import { addNewStory } from './storySlice';
+import { useNavigate } from 'react-router-dom';
 
 const AddStory = props => {
+
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const [addRequestStatus, setAddRequestStatus] = useState("idle")
@@ -27,6 +30,12 @@ const AddStory = props => {
                 console.log(values)
               setAddRequestStatus("pending")
               dispatch(addNewStory(values))  
+                 
+              values.storyAuthor = ""
+              values.storyDetailed = ""
+               values.storyTitle = ""
+               values.storyGenre = ""
+                navigate("/stories") 
               
             }catch(error){
                 console.log(error.message)
@@ -40,7 +49,7 @@ const AddStory = props => {
     return (
     <div>
        <DenseAppBar/>
-         <Box sx={{textAlign: "center", marginTop: 5}}>
+         <Box sx={{textAlign: "center", marginTop: 12}}>
             <Typography variant="h4" component="h3">
                 Add New Story
             </Typography>

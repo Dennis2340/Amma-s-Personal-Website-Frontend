@@ -47,9 +47,9 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap component="div">
             TRUMPSON
           </Typography>
-          <Box sx={{display: "flex", marginLeft: 70, }}>
+          <Box sx={{display: "flex", marginLeft: {xs: 20, sm: 70}, }}>
             <Box>
-            <Typography  variant='h6' component="h5"><NavLink className="nav" to="/addstory">Addstory</NavLink></Typography>
+            <Typography  variant='h6' component="h5"><NavLink className="nav" id='signing' to="/addstory">Addstory</NavLink></Typography>
             </Box>
            
           </Box>

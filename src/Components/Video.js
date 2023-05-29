@@ -8,25 +8,27 @@ import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
 
 const VideoComp = ({video}) => {
+
+  const url = video.videoUrl
+  const filename = url.split("/")
+  const mainUrl = filename[filename.length - 1]
+  console.log(mainUrl)
     return (
     <div>
       <Card sx={{ minWidth: 275, marginBottom: 5, width: {xs : "50%", sm: "100%"} }}>
       <CardContent>
-        <Typography  variant='h5' color="text.secondary" >
-          {/* {video.title} */}
-          title
+        <Typography style={{marginBottom: 2}} variant='h5' color="text.secondary" >
+          {video.title}
+          
         </Typography>
         <Box>
         <video controls>
-        <source src={"f8e68ec5-7612-4900-a200-707831cff26a-JuiceWrldLinkUp.mp4"} type="video/mp4" />
+        <source src={mainUrl} type="video/mp4" />
         Your browser does not support the video tag.
           </video> 
         </Box>
         <Typography sx={{ marginTop: 1}} variant="body2">
-          
-              {/* video.description */}
-            testing
-          
+              {video.description}
         </Typography>
         <NavLink to = {`/singlevideo/${video._id}`}>view</NavLink>
       </CardContent>

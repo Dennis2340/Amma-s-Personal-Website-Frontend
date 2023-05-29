@@ -16,23 +16,39 @@ const bull = (
   </Box>
 );
 
-export default function BasicCard({article}) {
+export default function BasicCard({user}) {
+
+  const url = user.pictureUrl
+  const filename = url.split("/")
+  const mainUrl = filename[filename.length - 1]
+  console.log(mainUrl)
+
   return (
     <Card sx={{ minWidth: 275, marginBottom: 5, width: {xs : "50%", sm: "100%"} }}>
       <CardContent>
         <Typography  variant='h5' color="text.secondary" >
-           {article.articleTitle}
+           {user.userName}
         </Typography>
+        <Box sx={{marginTop: 3}}>
         <Typography sx={{marginTop: 2}} variant="body2">
-          {article.articleDetails}
+          {user.userDescription}
         </Typography>
+        </Box>
+        <Box sx={{marginTop: 4, marginBottom: 4}}>
+        <img src={user.pictureUrl} alt='The owner is smiling'/>
+        </Box>
+        <Box>
+        <Typography variant='h5' component="h2">
+          Ways to contact me
+        </Typography>
+        </Box>
+        <Box>
         <Typography sx={{ marginTop: 1}} variant="body2">
           {
-            article.articleAuthor ? `by ${article.articleAuthor}` : "unknown author"
+            `please contact me for any additional info by phone +232${user.userPhoneNumber.slice(1)} or by email ${user.userEmail}`
           }
-          
         </Typography>
-        <NavLink to = {`/singlearticle/${article._id}`}>view</NavLink>
+        </Box>
       </CardContent>
       
     </Card>

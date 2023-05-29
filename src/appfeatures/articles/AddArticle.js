@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { TextField, Button,Box, Typography } from '@mui/material';
 import DenseAppBar from '../../Components/BasicBar';
 import { useFormik } from 'formik';
-import { addNewArticle } from './articleSlice';
+import { addNewArticle, fetchArticles } from './articleSlice';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const AddArticle = props => {
-
+ 
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const [addRequestStatus, setAddRequestStatus] = useState("idle")
@@ -25,7 +26,13 @@ const AddArticle = props => {
             if(values){
                 try{
                   setAddRequestStatus("pending")
-                  dispatch(addNewArticle(values))  
+                  dispatch(addNewArticle(values)) 
+                  dispatch(fetchArticles())
+                  values.articleAuthor = ""
+                  values.articleDetails = ""
+                  values.articleTitle = ""
+                  values.articleGenre = ""
+                  navigate("/articles")  
                   
                 }catch(error){
                     console.log(error.message)
@@ -39,7 +46,10 @@ const AddArticle = props => {
     // console.log("form values", formik.values)
     return (
     <div>
-        <Box sx={{textAlign: "center", marginTop: 5}}>
+        <Box sx={{ marginBottom: 10}}>
+        <DenseAppBar/>
+        </Box>
+        <Box sx={{textAlign: "center", marginTop: 12}}>
             <Typography variant="h4" component="h3">
                 Add New Article
             </Typography>

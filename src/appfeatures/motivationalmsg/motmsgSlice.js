@@ -71,7 +71,10 @@ const motmsgSlice = createSlice({
               // Add any additional processing or modifications to the story object if needed
               return motmsg;
             });
-            state.motmessages = state.motmessages.concat(loadedMotMessage);
+            
+            if(state.motmessages.length === 0){
+              state.motmessages = loadedMotMessage
+            }
         })
           
            

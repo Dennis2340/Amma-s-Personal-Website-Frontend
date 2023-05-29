@@ -6,7 +6,7 @@ import ResponsiveDrawer from "../Components/StoryAppBar"
 import { Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux"
 import { fetchStories, getAllStories, getStoryError, getStoryStatus } from '../appfeatures/stories/storySlice';
-
+import LinearIndeterminate from '../Components/LoadingPage';
 const Stories = props => {
 
   const dispatch = useDispatch()
@@ -27,17 +27,15 @@ const Stories = props => {
    let content;
    if(storyStatus === "loading"){
     return (
-      <Box>
-        <Typography variant='h3' component="h4">Loading...</Typography>
-      </Box>
+      <Box sx={{ marginTop: 25,}}>
+      <LinearIndeterminate/>
+    </Box>
     )
    }
    else if(storyStatus === "succeeded"){
     
    const orderedStory = storyList.slice().sort((a,b) => {
-    if(a.date && b.date) return  b.date.localeCompare(a.date)
-    
-    return 0
+    return new Date(b.createdAt) - new Date(a.createdAt);
   })
   console.log(orderedStory)
   

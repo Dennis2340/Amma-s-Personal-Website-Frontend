@@ -82,7 +82,10 @@ const storySlice = createSlice({
               // Add any additional processing or modifications to the story object if needed
               return story;
             });
-            state.stories = state.stories.concat(loadedStory);
+            
+            if (state.stories.length === 0) {
+              state.stories = loadedStory;
+            }
         })
           
            

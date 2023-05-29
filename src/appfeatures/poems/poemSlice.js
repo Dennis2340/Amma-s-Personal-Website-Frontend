@@ -11,7 +11,7 @@ const initialState = {
 
 export const fetchPoems = createAsyncThunk("poems/fetchPoems", async()=> {
  const poemData =  await axios.get(POEM_URL + "/getAllPoems")
- 
+ console.log(poemData.data)
  return poemData.data
 })
 
@@ -81,7 +81,9 @@ const poemSlice = createSlice({
                 // poem.createdAt = sub(new Date(), { minutes: min++})
                  return poem
              })
-              state.poems = state.poems.concat(loadedPoems)
+             if (state.poems.length === 0) {
+              state.poems = loadedPoems;
+            }
           })
           .addCase(fetchPoems.rejected, (state,action) => {
             state.status = "failed"

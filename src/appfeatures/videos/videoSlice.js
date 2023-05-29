@@ -57,11 +57,14 @@ export const addNewVideo = createAsyncThunk("video/addNewVideo", async(initialVi
           .addCase(fetchVideos.fulfilled, (state,action) => {
             state.status = "succeeded"
             
-            const loadedStory = action.payload.arrayOfVideoUrls?.map((story) => {
+            const loadedVideo = action.payload.videos?.map((story) => {
               // Add any additional processing or modifications to the story object if needed
               return story;
             });
-            state.videos = state.videos.concat(loadedStory);
+            
+            if(state.videos.length === 0){
+              state.videos = loadedVideo
+            }
         })
         .addCase(fetchVideos.rejected, (state,action) => {
             state.status = "failed"

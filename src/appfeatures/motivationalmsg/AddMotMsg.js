@@ -7,8 +7,11 @@ import { addNewMotMsg } from './motmsgSlice';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const AddMotMsg = props => {
 
+    const navigate = useNavigate()
+    
     const dispatch = useDispatch()
     const [addRequestStatus, setAddRequestStatus] = useState("idle")
     
@@ -24,6 +27,12 @@ const AddMotMsg = props => {
                 try{
                   setAddRequestStatus("pending")
                   dispatch(addNewMotMsg(values))  
+
+                  values.motMessageAuthor = ""
+                  values.motMessageDetails = ""
+                  values.motMessageTitle = ""
+                  values.motMessageGenre = ""
+                  navigate("/motmsg") 
                   
                 }catch(error){
                     console.log(error.message)
@@ -35,7 +44,11 @@ const AddMotMsg = props => {
     })
     return (
     <div>
-        <Box sx={{textAlign: "center", marginTop: 5}}>
+        <Box sx={{ marginBottom: 10}}>
+        <DenseAppBar/>
+        </Box>
+        
+        <Box sx={{textAlign: "center", marginTop: 12}}>
             <Typography variant="h4" component="h3">
                 Add New Motivational Message
             </Typography>
