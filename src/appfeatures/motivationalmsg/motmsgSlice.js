@@ -1,6 +1,7 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import sub from "date-fns/sub";
+import api from "../../api";
 const MOTMSG_URL = "https://ammas-sites-api.onrender.com/motMessage"
 
 const initialState = {
@@ -17,7 +18,7 @@ export const fetchMotMsg = createAsyncThunk("motmsg/fetchMotMsg", async() => {
 
   export const addNewMotMsg = createAsyncThunk("motmsg/addNewMotMsg", async(initialMotMsg) => {
     try {
-     const response = await axios.post(MOTMSG_URL + "/addMotMessage", initialMotMsg)
+     const response = await api.post(MOTMSG_URL + "/addMotMessage", initialMotMsg)
      console.log(response.data)
      return response.data   
    } catch (error) {
@@ -30,7 +31,7 @@ export const fetchMotMsg = createAsyncThunk("motmsg/fetchMotMsg", async() => {
     const { _id } = initialMotMsg
     console.log(_id)
   try {
-     const response = await axios.put(MOTMSG_URL + `/updateMotMessage/${_id}`, initialMotMsg)
+     const response = await api.put(MOTMSG_URL + `/updateMotMessage/${_id}`, initialMotMsg)
      return response.data
   } catch (error) {
       return error.message
@@ -40,7 +41,7 @@ export const fetchMotMsg = createAsyncThunk("motmsg/fetchMotMsg", async() => {
 export const deleteMotMsg = createAsyncThunk("motmsg/deleteMotMsg", async(initialMotMsg) => {
 const { _id } = initialMotMsg
 try {
- const response = await axios.delete(MOTMSG_URL + `/deleteMotMessage/${_id}`)
+ const response = await api.delete(MOTMSG_URL + `/deleteMotMessage/${_id}`)
  if(response?.status === 200) return initialMotMsg
  return `${response?.status} : ${response?.statusText}`
 } catch (error) {

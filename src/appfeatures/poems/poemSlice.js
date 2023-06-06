@@ -1,6 +1,7 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import sub from "date-fns/sub";
+import api from "../../api";
 const POEM_URL = "https://ammas-sites-api.onrender.com/poem"
 
 const initialState = {
@@ -17,7 +18,7 @@ export const fetchPoems = createAsyncThunk("poems/fetchPoems", async()=> {
 
 export const addNewPoem = createAsyncThunk("poem/addNewPoem", async(initialPoem) => {
    try {
-    const response = await axios.post(POEM_URL + "/addPoem", initialPoem)
+    const response = await api.post(POEM_URL + "/addPoem", initialPoem)
     console.log(response.data)
     return response.data   
   } catch (error) {
@@ -30,7 +31,7 @@ export const updatePoem = createAsyncThunk("poem/updatePoem", async(initialPoem)
       const { _id } = initialPoem
       console.log(_id)
     try {
-       const response = await axios.put(POEM_URL + `/updatePoem/${_id}`, initialPoem)
+       const response = await api.put(POEM_URL + `/updatePoem/${_id}`, initialPoem)
        return response.data
     } catch (error) {
         return error.message
@@ -40,7 +41,7 @@ export const updatePoem = createAsyncThunk("poem/updatePoem", async(initialPoem)
 export const deletePoem = createAsyncThunk("poem/deletePoem", async(initialPoem) => {
   const { _id } = initialPoem
   try {
-   const response = await axios.delete(POEM_URL + `/deletePoem/${_id}`)
+   const response = await api.delete(POEM_URL + `/deletePoem/${_id}`)
    if(response?.status === 200) return initialPoem
    return `${response?.status} : ${response?.statusText}`
   } catch (error) {

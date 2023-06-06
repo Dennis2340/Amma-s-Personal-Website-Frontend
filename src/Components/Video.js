@@ -9,6 +9,9 @@ import { NavLink } from 'react-router-dom';
 
 const VideoComp = ({video}) => {
 
+  if (!video || !video.videoUrl) {
+    return null; // Return early or show an error message if the video or videoUrl is undefined
+  }
   const url = video.videoUrl
   const filename = url.split("/")
   const mainUrl = filename[filename.length - 1]

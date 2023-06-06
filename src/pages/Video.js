@@ -25,6 +25,15 @@ const Video = props => {
     }
    }, [videoStatus, dispatch])
 
+   useEffect(() => {
+    if (videoStatus === "succeeded") {
+      const orderedVideos = videoList.slice().sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+      console.log(orderedVideos)
+    }
+  }, [videoList, videoStatus])
+  
    let content;
    if(videoStatus === "loading"){
     return (

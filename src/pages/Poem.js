@@ -28,6 +28,15 @@ const Poem = props => {
     }
    }, [poemStatus,dispatch,poemList])
 
+   useEffect(() => {
+    if (poemStatus === "succeeded") {
+      const orderedPoems = poemList.slice().sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+      console.log(orderedPoems)
+    }
+  }, [poemList, poemStatus])
+  
    let content;
    if(poemStatus === "loading"){
     return (

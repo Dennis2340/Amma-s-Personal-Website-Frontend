@@ -24,7 +24,7 @@ const bull = (
              {motmsg.motMessageTitle}
           </Typography>
           <Typography sx={{marginTop: 2}} variant="body2">
-            {motmsg.motMessageDetails}
+            {motmsg.motMessageDetails?.substring(0,40) + "..."}
           </Typography>
           <Typography sx={{ marginTop: 1}} variant="body2">
             {

@@ -7,19 +7,20 @@ import { selectPoemById,updatePoem, deletePoem } from './poemSlice';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react'
-;
+import { useNavigate  } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 const EditPoem = props => {
     const { id } = useParams()
-    
+    const navigate = useNavigate()
     
     const poem = useSelector(state => selectPoemById(state,id))
         
     const dispatch = useDispatch()
     const [addRequestStatus, setAddRequestStatus] = useState("idle")
     
-    const handleDelete = () =>{
-       dispatch(deletePoem(poem))
+    const handleDelete = async() =>{
+       await dispatch(deletePoem(poem))
+       navigate("/poems")
     }
     const formik = useFormik({
         initialValues: {
@@ -29,11 +30,13 @@ const EditPoem = props => {
         poemDetails: poem?.poemDetails,
         poemAuthor: poem?.poemAuthor
         },
-        onSubmit: (values) => {
+        onSubmit: async(values) => {
             if(values){
             try{
               setAddRequestStatus("pending")
-              dispatch(updatePoem(values))  
+              await dispatch(updatePoem(values))  
+              navigate("/poems")
+              window.location.reload()
               
             }catch(error){
                 console.log(error.message)

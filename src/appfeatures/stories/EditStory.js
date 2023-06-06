@@ -3,23 +3,25 @@ import PropTypes from 'prop-types';
 import { TextField, Button,Box, Typography } from '@mui/material';
 import DenseAppBar from '../../Components/BasicBar';
 import { useFormik } from 'formik';
-import { selectStoryById,updateStory, deleteStory } from './storySlice';
+import { selectStoryById,updateStory, deleteStory, fetchStories } from './storySlice';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 const EditStory = props => {
 
     const { id } = useParams()
-    
+    const navigate = useNavigate()
     
     const story = useSelector(state => selectStoryById(state,id))
         
     const dispatch = useDispatch()
     const [addRequestStatus, setAddRequestStatus] = useState("idle")
     
-    const handleDelete = () =>{
-       dispatch(deleteStory(story))
+    const handleDelete = async() =>{
+      await dispatch(deleteStory(story))
+      navigate("/stories")
     }
 
     const formik = useFormik({
@@ -30,11 +32,15 @@ const EditStory = props => {
         storyDetailed: story?.storyDetailed,
         storyAuthor: story?.storyAuthor
         },
-        onSubmit: (values) => {
+        onSubmit: async(values) => {
             if(values){
             try{
+                
               setAddRequestStatus("pending")
-              dispatch(updateStory(values))  
+              await dispatch(updateStory(values))  
+              await dispatch(fetchStories())
+              navigate("/stories")
+              window.location.reload()
               
             }catch(error){
                 console.log(error.message)
@@ -45,10 +51,20 @@ const EditStory = props => {
     }
     })
 
+    useEffect(() => {
+        formik.setValues({
+          _id: id,
+          storyTitle: story?.storyTitle,
+          storyGenre: story?.storyGenre,
+          storyDetailed: story?.storyDetailed,
+          storyAuthor: story?.storyAuthor,
+        });
+      }, [story, dispatch]);
+   
     return (
     <div>
         <DenseAppBar/>
-         <Box sx={{textAlign: "center", marginTop: 5}}>
+         <Box sx={{textAlign: "center", marginTop: 11}}>
             <Typography variant="h4" component="h3">
                 Edit Story
             </Typography>

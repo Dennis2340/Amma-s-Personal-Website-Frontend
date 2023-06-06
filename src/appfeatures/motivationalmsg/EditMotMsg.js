@@ -8,19 +8,21 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
 const EditMotMsg = props => {
 
     const { id } = useParams()
-    
+    const navigate = useNavigate()
     
     const motmsg = useSelector(state => selectMotMsgById(state,id))
         
     const dispatch = useDispatch()
     const [addRequestStatus, setAddRequestStatus] = useState("idle")
     
-    const handleDelete = () =>{
-       dispatch(deleteMotMsg(motmsg))
+    const handleDelete = async() =>{
+       await dispatch(deleteMotMsg(motmsg))
+       navigate("/motmsg")
     }
 
     const formik = useFormik({
@@ -31,11 +33,13 @@ const EditMotMsg = props => {
         motMessageDetails: motmsg?.motMessageDetails,
         motMessageAuthor: motmsg?.motMessageAuthor
         },
-        onSubmit: (values) => {
+        onSubmit: async(values) => {
             if(values){
             try{
               setAddRequestStatus("pending")
-              dispatch(updateMotMsg(values))  
+              await dispatch(updateMotMsg(values))  
+              navigate("/motmsg")
+              window.location.reload()
               
             }catch(error){
                 console.log(error.message)

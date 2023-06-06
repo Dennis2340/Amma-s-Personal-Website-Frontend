@@ -1,6 +1,7 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import sub from "date-fns/sub";
+import api from "../../api";
 const ARTICLE_URL = "https://ammas-sites-api.onrender.com/article"
 
 const initialState = {
@@ -17,7 +18,7 @@ export const fetchArticles = createAsyncThunk("article/fetchArticles", async() =
 
   export const addNewArticle = createAsyncThunk("article/addNewArticle", async(initialArticle) => {
     try {
-     const response = await axios.post(ARTICLE_URL + "/addArticle", initialArticle)
+     const response = await api.post(ARTICLE_URL + "/addArticle", initialArticle)
      console.log(response.data)
      return response.data   
    } catch (error) {
@@ -30,7 +31,7 @@ export const fetchArticles = createAsyncThunk("article/fetchArticles", async() =
     const { _id } = initialArticle
     console.log(_id)
   try {
-     const response = await axios.put(ARTICLE_URL + `/updateArticle/${_id}`, initialArticle)
+     const response = await api.put(ARTICLE_URL + `/updateArticle/${_id}`, initialArticle)
      return response.data
   } catch (error) {
       return error.message
@@ -40,7 +41,7 @@ export const fetchArticles = createAsyncThunk("article/fetchArticles", async() =
 export const deleteArticle = createAsyncThunk("article/deleteArticle", async(initialArticle) => {
 const { _id } = initialArticle
 try {
- const response = await axios.delete(ARTICLE_URL + `/deleteArticle/${_id}`)
+ const response = await api.delete(ARTICLE_URL + `/deleteArticle/${_id}`)
  if(response?.status === 200) return initialArticle
  return `${response?.status} : ${response?.statusText}`
 } catch (error) {

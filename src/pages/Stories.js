@@ -24,6 +24,15 @@ const Stories = props => {
     }
    }, [storyStatus, dispatch])
 
+   useEffect(() => {
+    if (storyStatus === "succeeded") {
+      const orderedStories = storyList.slice().sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+      console.log(orderedStories)
+    }
+  }, [storyList, storyStatus])
+  
    let content;
    if(storyStatus === "loading"){
     return (

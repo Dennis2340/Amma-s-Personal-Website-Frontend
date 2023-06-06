@@ -24,7 +24,7 @@ export default function BasicCard({poem}) {
           {poem.poemTitle}
         </Typography>
         <Typography sx={{marginTop: 2}} variant="body2">
-          {poem.poemDetails}
+          {poem.poemDetails?.substring(0,40) + "..."}
         </Typography>
         <Typography sx={{ marginTop: 1}} variant="body2">
           {

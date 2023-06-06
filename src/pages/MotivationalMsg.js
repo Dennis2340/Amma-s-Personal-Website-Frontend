@@ -23,6 +23,16 @@ const MotivationalMsg = props => {
     }
    }, [motmsgStatus, dispatch])
 
+   useEffect(() => {
+    if (motmsgStatus === "succeeded") {
+      const orderedMotMsg = motmsgList.slice().sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+      console.log(orderedMotMsg)
+    }
+  }, [motmsgList, motmsgStatus])
+
+
    let content;
    if(motmsgStatus === "loading"){
     return (

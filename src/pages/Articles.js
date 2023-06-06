@@ -25,6 +25,15 @@ const Articles = props => {
     }
    }, [articleStatus, dispatch])
 
+   useEffect(() => {
+    if (articleStatus === "succeeded") {
+      const orderedArticle = articleList.slice().sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+      console.log(orderedArticle)
+    }
+  }, [articleList, articleStatus])
+  
    let content;
    if(articleStatus === "loading"){
     return (

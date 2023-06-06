@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LinearProgress from '@mui/material/LinearProgress';
 const AddMotMsg = props => {
 
     const navigate = useNavigate()
@@ -22,17 +23,18 @@ const AddMotMsg = props => {
             motMessageDetails: "",
             motMessageAuthor: ""
         },
-        onSubmit: values => {
+        onSubmit: async(values) => {
             if(values){
                 try{
                   setAddRequestStatus("pending")
-                  dispatch(addNewMotMsg(values))  
+                 await dispatch(addNewMotMsg(values))  
 
                   values.motMessageAuthor = ""
                   values.motMessageDetails = ""
                   values.motMessageTitle = ""
                   values.motMessageGenre = ""
                   navigate("/motmsg") 
+                  window.location.reload()
                   
                 }catch(error){
                     console.log(error.message)
@@ -119,6 +121,13 @@ const AddMotMsg = props => {
                 Add MotMsg
                 </Button>
             </Box>
+            {
+            addRequestStatus === "pending" ? <Box sx={{marginTop: 4}}>
+              
+              <LinearProgress/>
+              
+              </Box> : null
+          }
 
         </Box>
 

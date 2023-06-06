@@ -44,7 +44,7 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6"  component="div">
             TRUMPSON
           </Typography>
           <Box sx={{display: "flex", marginLeft: {xs: 10, sm: 78}}}>

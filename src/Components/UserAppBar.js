@@ -49,7 +49,7 @@ function ResponsiveDrawer(props) {
           </Typography>
           <Box sx={{display: "flex", marginLeft: {xs: 15, sm: 88}, }}>
             <Box>
-            <Typography  variant='h7' component="h5"><NavLink className="nav" id='signing' to="/addarticle">AddArticle</NavLink></Typography>
+            <Typography  variant='h7' component="h5"><NavLink className="nav" id='signing' to="/edituser">EditUser</NavLink></Typography>
             </Box>
            
           </Box>

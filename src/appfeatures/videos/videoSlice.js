@@ -1,6 +1,8 @@
+import { ApiTwoTone } from "@mui/icons-material";
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import sub from "date-fns/sub";
+import api from "../../api";
 const VIDEO_URL = "https://ammas-sites-api.onrender.com"
 
 const initialState = {
@@ -17,7 +19,12 @@ export const fetchVideos = createAsyncThunk("video/fetchVideos", async() => {
 
 export const addNewVideo = createAsyncThunk("video/addNewVideo", async(initialVideo) => {
     try {
-     const response = await axios.post(VIDEO_URL + "/addVideo", initialVideo)
+     const response = await api.post(VIDEO_URL + "/addVideo", initialVideo,
+     { headers: {
+      'Content-Type': 'multipart/form-data',
+      'Accept': 'application/json, text/plain, video/*'
+    }}
+     )
      console.log(response.data)
      return response.data   
    } catch (error) {
@@ -29,13 +36,17 @@ export const addNewVideo = createAsyncThunk("video/addNewVideo", async(initialVi
  export const deleteVideo = createAsyncThunk("video/deleteVideo", async(initialVideo) => {
     const { _id } = initialVideo
     try {
-     const response = await axios.delete(VIDEO_URL + `/deleteSingleVideo/${_id}`)
+     const response = await api.delete(VIDEO_URL + `/deleteSingleVideo/${_id}`)
      if(response?.status === 200) return initialVideo
      return `${response?.status} : ${response?.statusText}`
     } catch (error) {
       return error.message
     }
   })
+
+  // export const fetchVideoById = createAsyncThunk("video/fetchById", async(id) => {
+     
+  // })
 
 
   const videoSlice = createSlice({
@@ -57,9 +68,9 @@ export const addNewVideo = createAsyncThunk("video/addNewVideo", async(initialVi
           .addCase(fetchVideos.fulfilled, (state,action) => {
             state.status = "succeeded"
             
-            const loadedVideo = action.payload.videos?.map((story) => {
+            const loadedVideo = action.payload.videos?.map((video) => {
               // Add any additional processing or modifications to the story object if needed
-              return story;
+              return video;
             });
             
             if(state.videos.length === 0){
@@ -97,7 +108,7 @@ export const getAllVideos = (state) => {
 }
 export const getVideoStatus = (state) => state.videos.status
 export const getVideoError = (state) => state.videos.error
-export const selectVideoById = ((state, videoId) => state.videos.stories.find(video => video._id === videoId))
+export const selectVideoById = ((state, videoId) => state.videos.videos?.find(video => video._id === videoId))
 export default videoSlice.reducer
 
 export const { videoAdded } = videoSlice.actions

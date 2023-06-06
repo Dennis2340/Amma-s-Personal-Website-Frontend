@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { TextField, Button,Box, Typography } from '@mui/material';
 import DenseAppBar from '../../Components/BasicBar';
 import { useFormik } from 'formik';
-
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
 import { addNewStory } from './storySlice';
 import { useNavigate } from 'react-router-dom';
-
+import LinearProgress from '@mui/material/LinearProgress';
 const AddStory = props => {
 
     const navigate = useNavigate()
@@ -24,18 +23,19 @@ const AddStory = props => {
         storyDetailed: "",
         storyAuthor: ""
         },
-        onSubmit: (values) => {
+        onSubmit: async(values) => {
             if(values){
             try{
                 console.log(values)
               setAddRequestStatus("pending")
-              dispatch(addNewStory(values))  
+              await dispatch(addNewStory(values))  
                  
               values.storyAuthor = ""
               values.storyDetailed = ""
                values.storyTitle = ""
                values.storyGenre = ""
                 navigate("/stories") 
+                window.location.reload()
               
             }catch(error){
                 console.log(error.message)
@@ -119,6 +119,13 @@ const AddStory = props => {
                 Add Story
                 </Button>
             </Box>
+            {
+            addRequestStatus === "pending" ? <Box sx={{marginTop: 4}}>
+              
+              <LinearProgress/>
+              
+              </Box> : null
+          }
 
         </Box>
 

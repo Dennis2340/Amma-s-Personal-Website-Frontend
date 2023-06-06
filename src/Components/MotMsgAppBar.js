@@ -44,12 +44,12 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6"  component="div">
             TRUMPSON
           </Typography>
-          <Box sx={{display: "flex", marginLeft: {xs: 20, sm: 88}, }}>
+          <Box sx={{display: "flex", marginLeft: {xs: 14, sm: 88}, }}>
             <Box>
-            <Typography  variant='h6' component="h5"><NavLink className="nav" id='signing' to="/addmotmsg">AddMotMsg</NavLink></Typography>
+            <Typography  variant='h7' component="h5"><NavLink className="nav" id='signing' to="/addmotmsg">AddMotMsg</NavLink></Typography>
             </Box>
            
           </Box>

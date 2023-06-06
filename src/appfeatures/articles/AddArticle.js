@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LinearProgress from '@mui/material/LinearProgress';
 const AddArticle = props => {
  
     const navigate = useNavigate()
@@ -22,17 +23,18 @@ const AddArticle = props => {
             articleDetails: "",
             articleAuthor: ""
         },
-        onSubmit: values => {
+        onSubmit: async(values) => {
             if(values){
                 try{
                   setAddRequestStatus("pending")
-                  dispatch(addNewArticle(values)) 
-                  dispatch(fetchArticles())
+                  await dispatch(addNewArticle(values)) 
+                  await dispatch(fetchArticles())
                   values.articleAuthor = ""
                   values.articleDetails = ""
                   values.articleTitle = ""
                   values.articleGenre = ""
                   navigate("/articles")  
+                  window.location.reload()
                   
                 }catch(error){
                     console.log(error.message)
@@ -118,6 +120,13 @@ const AddArticle = props => {
                 Add Article
                 </Button>
             </Box>
+            {
+            addRequestStatus === "pending" ? <Box sx={{marginTop: 4}}>
+              
+              <LinearProgress/>
+              
+              </Box> : null
+          }
             
         </Box>
 

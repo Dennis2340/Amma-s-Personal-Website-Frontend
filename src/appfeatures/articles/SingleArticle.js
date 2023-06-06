@@ -23,7 +23,7 @@ const SingleArticle = props => {
     <div>
     <DenseAppBar/>
         <Box>
-        <Card variant='outlined' sx={{ minWidth: 275, marginBottom: 5,marginTop: 5, marginLeft: 2, width: {xs : "50%", sm: "100%"} }}>
+        <Card variant='outlined' sx={{ minWidth: 275, marginBottom: 5,marginTop: 15, marginLeft: 2, width: {xs : "50%", sm: "75%"} }}>
             <CardContent>
             <Typography  variant='h5' color="text.secondary" >
                 {article.articleTitle}
@@ -31,7 +31,7 @@ const SingleArticle = props => {
            <Typography sx={{marginTop: 2}} variant="body2">
               {article.articleDetailed}
            </Typography>
-           <Typography sx={{ marginTop: 1}} variant="body2">
+           <Typography sx={{ marginTop: 1, marginBottom: 2}} variant="body2">
                {
                article.articleAuthor ? `by ${article.articleAuthor}` : "unknown author"
               }

@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LinearProgress from '@mui/material/LinearProgress';
 const AddPoem = props => {
 
     const navigate = useNavigate()
@@ -22,16 +23,17 @@ const AddPoem = props => {
         poemDetails: "",
         poemAuthor: ""
         },
-        onSubmit: (values) => {
+        onSubmit: async(values) => {
             if(values){
             try{
               setAddRequestStatus("pending")
-              dispatch(addNewPoem(values)) 
+              await dispatch(addNewPoem(values)) 
               values.poemAuthor = ""
               values.poemDetails = ""
               values.poemTitle = ""
               values.poemGenre = ""
               navigate("/poems") 
+              window.location.reload()
               
             }catch(error){
                 console.log(error.message)
@@ -117,6 +119,13 @@ const AddPoem = props => {
                 Add Poem
                 </Button>
             </Box>
+            {
+            addRequestStatus === "pending" ? <Box sx={{marginTop: 4}}>
+              
+              <LinearProgress/>
+              
+              </Box> : null
+          }
             
         </Box>
 

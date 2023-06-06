@@ -24,7 +24,7 @@ export default function BasicCard({story}) {
            {story.storyTitle}
         </Typography>
         <Typography sx={{marginTop: 2}} variant="body2">
-          {story.storyDetailed}
+          {story.storyDetailed?.substring(0,40) + "..."}
         </Typography>
         <Typography sx={{ marginTop: 1}} variant="body2">
           {

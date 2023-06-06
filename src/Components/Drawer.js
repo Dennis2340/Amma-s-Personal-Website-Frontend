@@ -13,15 +13,16 @@ import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { getUserInfo,getUserError } from '../appfeatures/about/aboutSlice';
+import { useSelector } from 'react-redux';
 
 
-  const HandleButtonClicked = (index) => {
-  
-      console.log("buttonClicked", index)
-  }
+const HandleButtonClicked = () => {
 
+}
   const drawer =
   (
+    
 
  
     <div>
@@ -57,7 +58,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
                 {index  === 0 ? <InfoIcon /> : null }
               </ListItemIcon>
               {
-                text === "About" ? <NavLink className="nav" to="/about"><ListItemText primary={text} /></NavLink> : null
+                text === "About" ? <NavLink className="nav" to={`/about`}><ListItemText primary={text} /></NavLink> : null
               }
             </ListItemButton>
           </ListItem>
